@@ -1,5 +1,5 @@
 # remote_theme: daattali/beautiful-jekyll@5.0.0
-remote_theme: minimal-mistakes-jekyll
+remote_theme: mmistakes/minimal-mistakes@4.24.0
 
 # Name of website
 title: My Notion
