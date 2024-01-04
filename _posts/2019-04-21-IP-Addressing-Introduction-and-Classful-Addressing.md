@@ -1,5 +1,4 @@
 ---
-layout: post
 title: IP Addressing - Introduction and Classful Addressing
 subtitle:
 tags: [infrastructure]

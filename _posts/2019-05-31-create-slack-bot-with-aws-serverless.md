@@ -1,5 +1,4 @@
 ---
-layout: single
 title: Create Slack Bot with AWS Serverless
 subtitle: Create Slack Bot with API gateway and Lambda
 tags: [AWS, Slack, Serverless, API Gateway, Lambda]

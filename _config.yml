@@ -15,17 +15,17 @@ remote_theme             : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "air" # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "vi-VN"
+locale                   : "en-US"
 title                    : "My Notion"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Anton"
+name                     : "Anton Nguyen"
 description              : "A notion about everything"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "anhnt1208/anhnt1208.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/img/avatar/chibit.png"
+logo                     : "/assets/img/avatar/avatar.jpeg"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -105,14 +105,14 @@ analytics:
 # Site Author
 author:
   name             : "Anton"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/img/avatar/avatar.jpeg"
   bio              : "I am a Backend engineer."
-  location         :
+  location         : "Ho Chi Minh City, Vietnam"
   email            : anhnt1208@gmail.com
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:anhnt1208@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -124,7 +124,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      url: "https://github.com/anhnt1208"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
@@ -155,7 +155,6 @@ footer:
 # Reading Files
 include:
   - .htaccess
-  - _pages
   - _posts
 exclude:
   - "*.sublime-project"

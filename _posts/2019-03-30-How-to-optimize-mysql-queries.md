@@ -1,5 +1,4 @@
 ---
-layout: post
 title: How to Optimize MySQL Queries for Speed and Performance
 gh-badge: [star, fork, follow]
 tags: [performance, optimize, database, mysql, ]

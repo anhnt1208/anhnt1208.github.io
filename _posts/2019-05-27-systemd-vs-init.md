@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Systemd vs /etc/init.d
 subtitle: replace Systemd with init
 tags: [unix, ubuntu]
