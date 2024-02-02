@@ -9,22 +9,16 @@ Maintained by Knut Sveidqvist, it supports a bunch of different common diagram t
 
 Working with Knut and also the wider community at CommonMark, we’ve rolled out a change that will allow you to create graphs inline using [Mermaid syntax](https://mermaid.js.org/#/n00b-syntaxReference?id=syntax-structure), for example:
 
-```mermaid
+```
   graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ```
 The raw code block above will appear as this diagram in the rendered Markdown:
 
-```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-```
+<img src="./2023-02-02-include-diagram-into-md-with-mermaid/rendered-diagram.webp" alt="rerender diagram">
 
 Mermaid has been getting increasingly popular with developers and has a rich community of contributors led by the maintainer Knut Sveidqvist. 
 We are very grateful for Knut’s support in bringing this feature to everyone on GitHub. 
