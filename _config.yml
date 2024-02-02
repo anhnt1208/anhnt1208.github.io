@@ -110,9 +110,6 @@ author:
   location         : "Ho Chi Minh City, Vietnam"
   email            : anhnt1208@gmail.com
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:anhnt1208@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
