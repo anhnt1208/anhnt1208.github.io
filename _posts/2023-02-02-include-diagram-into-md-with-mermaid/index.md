@@ -18,7 +18,7 @@ Working with Knut and also the wider community at CommonMark, we’ve rolled out
 ```
 The raw code block above will appear as this diagram in the rendered Markdown:
 
-<img src="./2023-02-02-include-diagram-into-md-with-mermaid/rendered-diagram.webp" alt="rerender diagram">
+<img src="/assets/images/include-diagram-into-md-with-mermaid/rendered-diagram.webp" alt="rerender diagram">
 
 Mermaid has been getting increasingly popular with developers and has a rich community of contributors led by the maintainer Knut Sveidqvist. 
 We are very grateful for Knut’s support in bringing this feature to everyone on GitHub. 
