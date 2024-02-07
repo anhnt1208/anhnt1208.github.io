@@ -9,7 +9,7 @@ Maintained by Knut Sveidqvist, it supports a bunch of different common diagram t
 
 Working with Knut and also the wider community at CommonMark, we’ve rolled out a change that will allow you to create graphs inline using [Mermaid syntax](https://mermaid.js.org/#/n00b-syntaxReference?id=syntax-structure), for example:
 
-```mermaid
+```
   graph TD;
     A-->B;
     A-->C;
