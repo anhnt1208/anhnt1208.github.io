@@ -16,11 +16,11 @@ minimal_mistakes_skin    : "air" # "default", "air", "aqua", "contrast", "dark",
 
 # Site Settings
 locale                   : "en-US"
-title                    : "My Notion"
+title                    : "My Notion Book"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Anton Nguyen"
-description              : "A notion about everything"
+description              : "The Notion Book for all things related to the technology."
 url                      : "" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "anhnt1208/anhnt1208.github.io"
