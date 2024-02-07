@@ -289,6 +289,9 @@ plugins:
   - jekyll-include-cache
   - jekyll-spaceship
 
+# Enable safe mode
+safe: true
+
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
