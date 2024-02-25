@@ -4,7 +4,7 @@ subtitle: API Hub Architecture Overview
 toc: true
 tags: [Architecture, MicroService]
 ---
-{% toc %}
+{:toc}
 
 ## Background 
 An API hub serves as a centralized repository, allowing several projects can register and integrate all APIs seamlessly, utilizing a single key.
