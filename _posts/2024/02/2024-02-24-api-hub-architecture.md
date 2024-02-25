@@ -22,7 +22,7 @@ An API hub serves as a centralized repository, allowing several projects can reg
 #### API Managment
 - Manage metadata about APIs in the API Hub ( Metadata, API docs )
 - Serving the UI that developers interact with to discover and view API details
-- 
+
 #### API Gateway
 - Enforcing gateway functionality: Authorization, rate limits, quota limits, transformations, etc... 
 - Is independent of the API Managment. 
@@ -47,4 +47,4 @@ An API hub serves as a centralized repository, allowing several projects can reg
 <img src="{{ '/assets/img/post/2024/02/20240224-api-register-service.png' | relative_url }}" />
 
 #### Use Booking API Flow 
-<img src="{{ '/assets/img/post/2024/02/20240224-api-use-booking-service.png | relative_url }}" />
+<img src="{{ '/assets/img/post/2024/02/20240224-api-use-booking-service.png' | relative_url }}" />
