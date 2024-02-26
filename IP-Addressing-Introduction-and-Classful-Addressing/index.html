@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>IP Addressing - Introduction and Classful Addressing - My Notion Book</title>
+<meta name="description" content="A classful network is a network addressing architecture used in the Internet from 1981 until the introduction of Classless Inter-Domain Routing (CIDR) in 1993. The method divides the IP address space for Internet Protocol version 4 (IPv4) into five address classes based on the leading four address bits.">
+
+
+  <meta name="author" content="Anton">
+  
+  <meta property="article:author" content="Anton">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="My Notion Book">
+<meta property="og:title" content="IP Addressing - Introduction and Classful Addressing">
+<meta property="og:url" content="/IP-Addressing-Introduction-and-Classful-Addressing/">
+
+
+  <meta property="og:description" content="A classful network is a network addressing architecture used in the Internet from 1981 until the introduction of Classless Inter-Domain Routing (CIDR) in 1993. The method divides the IP address space for Internet Protocol version 4 (IPv4) into five address classes based on the leading four address bits.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-21T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/IP-Addressing-Introduction-and-Classful-Addressing/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Anton Nguyen",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Notion Book Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/avatar/avatar.jpeg" alt="My Notion Book"></a>
+        
+        <a class="site-title" href="/">
+          My Notion Book
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/img/avatar/avatar.jpeg" alt="Anton" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Anton</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a Backend engineer.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Ho Chi Minh City, Vietnam</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/anhnt1208" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:anhnt1208@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="anhnt1208@gmail.com">
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="IP Addressing - Introduction and Classful Addressing">
+    <meta itemprop="description" content="A classful network is a network addressing architecture used in the Internet from 1981 until the introduction of Classless Inter-Domain Routing (CIDR) in 1993.The method divides the IP address space for Internet Protocol version 4 (IPv4) into five address classes based on the leading four address bits.">
+    <meta itemprop="datePublished" content="2019-04-21T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/IP-Addressing-Introduction-and-Classful-Addressing/" class="u-url" itemprop="url">IP Addressing - Introduction and Classful Addressing
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>A <strong>classful network</strong> is a network addressing architecture used in the Internet from 1981 until the introduction of <strong>Classless Inter-Domain Routing (CIDR)</strong> in 1993.
+The method divides the IP address space for <strong>Internet Protocol version 4</strong> (IPv4) into five address classes based on the leading four address bits.</p>
+
+<h2 id="ip-addressing">IP Addressing</h2>
+<p>Each TCP/IP host is identified by a logical IP address.
+The IP address is a network layer address and has no dependence on the data link layer address
+(such as a MAC address of a network interfacecard).
+A unique IP address is required for each host and network component that communicates using TCP/IP.
+Each IP address is divided into two parts : <strong>Network ID</strong> and <strong>Host ID</strong>.</p>
+<ul>
+  <li>The <strong>network ID</strong> (also known as a network address) identifies the systems that are located on thesame physical network bounded by IP routers.
+All systems on the same physical network must havethe same network ID.
+The <strong>network ID</strong> must be unique to the internetwork.</li>
+  <li>The host ID (also known as a host address) identifies a workstation, server, router, or otherTCP/IP host within a network.</li>
+</ul>
+
+<p>The address for each host must be unique to the network ID
+An IP address is 32 bits long.
+Rather than working with 32 bits at a time, it is a common practice tosegment the 32 bits of the IP address into four 8-bit fields called octets.
+Each octet is converted to adecimal number (the Base 10 numbering system) in the range 0-255 and separated by a period (adot).
+This format is called <strong>dotted decimal notation</strong>.
+<img src="https://www.geeksforgeeks.org/wp-content/uploads/IP_addressing_1.jpg" alt=""></p>
+
+<h2 id="address-classes">Address Classes</h2>
+<h3 id="class-a">Class A</h3>
+<p>Class A addresses are assigned to networks with a very large number of hosts.
+The high-order bit in aclass A address is always set to zero.
+The next seven bits (completing the first octet) complete the network ID.
+The remaining 24 bits (the last three octets) represent the host ID.
+This allows for 126 networks and 16,777,214 hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2_2.png" alt=""></p>
+
+<h3 id="class-b">Class B</h3>
+<p>Class B addresses are assigned to medium-sized to large-sized networks.
+The two high-order bits in aclass B address are always set to binary <strong>1 0</strong>.
+The next 14 bits (completing the first two octets)complete the network ID.
+The remaining 16 bits (last two octets) represent the host ID.
+This allows for16,384 networks and 65,534 hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2-3.png" alt=""></p>
+
+<h3 id="class-c">Class C</h3>
+<p>Class C addresses are used for small networks.
+The three high-order bits in a class C address arealways set to binary <strong>1 1 0</strong>.
+The next 21 bits (completing the first three octets) complete the network ID.
+The remaining 8 bits (last octet) represent the host ID.
+This allows for 2,097,152 networks and 254hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2_4.png" alt=""></p>
+
+<h3 id="class-d">Class D</h3>
+<p>Class D addresses are reserved for IP multicast addresses.
+The four high-order bits in a class D address are always set to binary <strong>1 1 1 0</strong>.
+The remaining bits are for the address that interested hostswill recognize.
+Class D does not posses any sub-net mask.
+Microsoft supports class D addresses for applications to multicast data to multicast-capable hosts on an internetwork.</p>
+
+<h3 id="class-e">Class E</h3>
+<p>class E addresses are reserved for experimental and research purposes.
+The high-order bits in a classE address are set to <strong>1 1 1 1</strong>.
+This class doesn’t have any sub-net mask.</p>
+
+<h2 id="network-id-guidelines">Network ID Guidelines</h2>
+<p>The network ID identifies the TCP/IP hosts that are located on the same physical network.
+All hosts on the same physical network must be assigned the same network ID to communicate with each other</p>
+<ul>
+  <li>The network address must be unique to the IP internetwork. If you plan on having a direct routed connection to the public Internet, the network ID must be unique to the Internet.
+If you do not plan onconnecting to the public Internet, the local network ID must be unique to your private internetwork.</li>
+  <li>The network ID cannot begin with the number 127. The number 127 in a class A address isreserved for internal loopback functions.</li>
+  <li>All bits within the network ID cannot be set to 1. All 1’s in the network ID are reserved for use as an IP broadcast address.</li>
+  <li>All bits within the network ID cannot be set to 0. All 0’s in the network ID are used to denote aspecific host on the local network and will not be routed.</li>
+</ul>
+
+<h2 id="host-id-guidelines">Host ID Guidelines</h2>
+<p>The host ID identifies a TCP/IP host within a network.
+The combination of IP network ID and IP host IDis an IP address.
+Follow these guidelines when assigning a host ID:</p>
+<ul>
+  <li>The host ID must be unique to the network ID.</li>
+  <li>All bits within the host ID cannot be set to 1, because this host ID is reserved as a broadcast address to send a packet to all hosts on a network.</li>
+  <li>All bits in the host ID cannot be set to 0, because this host ID is reserved to denote the IP networkID.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Leading bits</th>
+      <th>Size of network  number bit field</th>
+      <th>Number of Networks</th>
+      <th>Hosts per Network</th>
+      <th>ID range</th>
+      <th>Default subnet mask</th>
+      <th>CIDR notation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>0</td>
+      <td>8</td>
+      <td>128 (2^7)</td>
+      <td>2^24 – 2 = 16,777,24</td>
+      <td>0.0.0.0 ~ 126.0.0.0</td>
+      <td>255.0.0.0</td>
+      <td>/8</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>10</td>
+      <td>16</td>
+      <td>16,384 (2^14)</td>
+      <td>2^16 – 2 = 65,534</td>
+      <td>128.0.0.0 ~ 191.255.0.0</td>
+      <td>255.255.0.0</td>
+      <td>/16</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>110</td>
+      <td>24</td>
+      <td>2,097,152 (2^21)</td>
+      <td>2^8 – 2 = 254</td>
+      <td>192.0.0.0 ~ 223.255.255.0</td>
+      <td>255.255.255.0</td>
+      <td>/24</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The number of addresses usable for addressing specific hosts in each network is always <strong>2N - 2</strong>,
+where <em>N</em> is the number of rest field bits, and the subtraction of <em>2</em> adjusts for the use of the all-bits-zero host portion for network address and the all-bits-one host portion as a broadcast address.
+Thus, for a Class C address with 8 bits available in the host field, the maximum number of hosts is 254.</p>
+
+<p>Today, IP addresses are associated with a subnet mask.
+This was not required in a classful network because the mask was implied by the address itself.
+Any network device would inspect the first few bits of the IP address to determine the class of the address and thus its netmask.</p>
+
+<p>The blocks numerically at the start and end of classes A, B and C were originally reserved for special addressing or future features</p>
+<ul>
+  <li>0.0.0.0/8 and 127.0.0.0/8 are reserved in former class A.
+While the 127.0.0.0/8 network is a Class A network, it is designated for loopback and cannot be assigned to a network</li>
+  <li>128.0.0.0/16 and 191.255.0.0/16 were reserved in former class B but are now available for assignment;</li>
+  <li>192.0.0.0/24 and 223.255.255.0/24 are reserved in former class C.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#infrastructure" class="page__taxonomy-item p-category" rel="tag">infrastructure</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2019-04-21T00:00:00+00:00">April 21, 2019</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=IP+Addressing+-+Introduction+and+Classful+Addressing%20%2FIP-Addressing-Introduction-and-Classful-Addressing%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2FIP-Addressing-Introduction-and-Classful-Addressing%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2FIP-Addressing-Introduction-and-Classful-Addressing%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/How-to-optimize-mysql-queries/" class="pagination--pager" title="How to Optimize MySQL Queries for Speed and Performance
+">Previous</a>
+    
+    
+      <a href="/systemd-vs-init/" class="pagination--pager" title="Systemd vs /etc/init.d
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/api-hub-architecture/" rel="permalink">API Hub - Part 01
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/include-diagram-into-md-with-mermaid/" rel="permalink">Include diagrams into Markdown with Mermaid
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Mermaid is a JavaScript based diagramming and charting tool that takes Markdown-inspired text definitions and creates diagrams dynamically in the browser. 
+M...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/create-slack-bot-with-aws-serverless/" rel="permalink">Create Slack Bot with AWS Serverless
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/systemd-vs-init/" rel="permalink">Systemd vs /etc/init.d
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">The init daemon is going to be replaced with daemon systemd on some of the Linux Distributions, while a lot of them have already implemented it. This is/will...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2024 Anton Nguyen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

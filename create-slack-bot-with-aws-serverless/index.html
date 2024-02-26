@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Create Slack Bot with AWS Serverless - My Notion Book</title>
+<meta name="description" content="A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs. We will create simple bot that receive and process some simple task by entering command into channel Example :    Me : @abot calculate 1 + 2   Bot : 1 + 2 = 3">
+
+
+  <meta name="author" content="Anton">
+  
+  <meta property="article:author" content="Anton">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="My Notion Book">
+<meta property="og:title" content="Create Slack Bot with AWS Serverless">
+<meta property="og:url" content="/create-slack-bot-with-aws-serverless/">
+
+
+  <meta property="og:description" content="A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs. We will create simple bot that receive and process some simple task by entering command into channel Example :    Me : @abot calculate 1 + 2   Bot : 1 + 2 = 3">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-05-31T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/create-slack-bot-with-aws-serverless/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Anton Nguyen",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Notion Book Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/avatar/avatar.jpeg" alt="My Notion Book"></a>
+        
+        <a class="site-title" href="/">
+          My Notion Book
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/img/avatar/avatar.jpeg" alt="Anton" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Anton</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a Backend engineer.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Ho Chi Minh City, Vietnam</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/anhnt1208" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:anhnt1208@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="anhnt1208@gmail.com">
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Create Slack Bot with AWS Serverless">
+    <meta itemprop="description" content="A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs.We will create simple bot that receive and process some simple task by entering command into channelExample :  Me : @abot calculate 1 + 2  Bot : 1 + 2 = 3">
+    <meta itemprop="datePublished" content="2019-05-31T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/create-slack-bot-with-aws-serverless/" class="u-url" itemprop="url">Create Slack Bot with AWS Serverless
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs.
+We will create simple bot that receive and process some simple task by entering command into channel
+Example :</p>
+<ul>
+  <li>Me : @abot calculate 1 + 2</li>
+  <li>Bot : 1 + 2 = 3</li>
+</ul>
+
+<p>The way the chat bot will work is the following:</p>
+<ul>
+  <li>User enter message into channel, ex. “@abot say hello”</li>
+  <li>Slack bot will send the request with this message to API Gateway</li>
+  <li>An AWS Lambda function processes the payload of the request and takes an appropriate action,then reply request to the Slack API
+We will need permission to create app on Slack, so on this Post we will create us self slack workspace</li>
+</ul>
+
+<h3 id="create-iam-role-to-enable-write-log-from-lambda">Create IAM Role to enable write log from Lambda</h3>
+<p>From AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Services</code> → <code class="language-plaintext highlighter-rouge">IAM</code>
+Create Role named <strong>AllowLambdaWriteLog</strong> that allow Lambda can able to write log with below policies</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"logs:CreateLogStream"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"logs:PutLogEvents"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:logs:*:*:*"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs:CreateLogGroup"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="create-aws-lambda">Create AWS Lambda</h3>
+<p>From AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Services</code> → <code class="language-plaintext highlighter-rouge">Lambda</code></p>
+<ul>
+  <li>
+<strong>Name</strong> : TestSlackBot</li>
+  <li>
+<strong>Runtime</strong> : Python 3.6</li>
+  <li>
+<strong>Execution Role</strong> : use existing role <code class="language-plaintext highlighter-rouge">AllowLambdaWriteLog</code>
+<img src="/img/20190531/image2019-5-30_14-7-35.png" alt="Create new lambda function">
+Then click <code class="language-plaintext highlighter-rouge">Create Function</code>
+</li>
+</ul>
+
+<h3 id="implement-lambda-function">Implement Lambda function</h3>
+<p>First, declare and import some resources need to use</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+Slack chat-bot Lambda handler.
+"""</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># Use logger for debug and logging
+</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># Grab the Bot OAuth token from the environment.
+</span><span class="n">BOT_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"BOT_TOKEN"</span><span class="p">]</span>
+
+<span class="c1"># Define the URL of the targeted Slack API resource.
+</span><span class="n">SLACK_URL</span> <span class="o">=</span> <span class="s">"https://slack.com/api/chat.postMessage"</span>
+
+<span class="c1"># Main handler
+</span><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+</code></pre></div></div>
+
+<p>When setup Slack API resource, Slack require to verify the API URL by the challenger request.
+We need add below code to reply this challenger request</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Required for valid challenge request from slack api
+</span>    <span class="k">if</span> <span class="s">"challenge"</span> <span class="ow">in</span> <span class="n">event</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">event</span><span class="p">[</span><span class="s">"challenge"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Continue, detach command from the message from the user send to bot</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Main handler
+</span><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">....</span>
+
+    <span class="c1"># Grab the Slack event data.
+</span>    <span class="n">slack_event</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s">"event"</span><span class="p">]</span>
+    <span class="c1"># Check message has been sent from bot
+</span>    <span class="k">if</span> <span class="s">"bot_id"</span> <span class="ow">in</span> <span class="n">slack_event</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="c1"># Detach command from the message that user sent to bot,
+</span>    <span class="n">text</span> <span class="o">=</span> <span class="n">slack_event</span><span class="p">[</span><span class="s">"text"</span><span class="p">]</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="n">detach_command</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">matched</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched message. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="c1"># Function : Detach command from message
+</span><span class="k">def</span> <span class="nf">detach_command</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="c1"># Match message format : &lt;@bot_id&gt; &lt;command&gt; [option message]
+</span>    <span class="n">matched</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">"&lt;@(\w+)&gt;[\s](\w+)(.*)"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">matched</span><span class="p">:</span>
+        <span class="c1"># matched data must be {'bot_id', 'command', 'optional'}
+</span>        <span class="k">return</span> <span class="n">matched</span><span class="p">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Now, we will process the command that detached from message</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">......</span>
+
+    <span class="c1"># process command
+</span>    <span class="n">bot_id</span>  <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="n">optional_data</span> <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="k">if</span> <span class="n">bot_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s">"authed_users"</span><span class="p">]:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched command. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="n">result_msg</span> <span class="o">=</span> <span class="n">process_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">optional_data</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">result_msg</span> <span class="o">==</span> <span class="s">""</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched command. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="c1"># Function : Detach command from message
+</span><span class="k">def</span> <span class="nf">detach_command</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="p">....</span>
+
+<span class="c1"># Function : process the command
+</span><span class="k">def</span> <span class="nf">process_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">optional_data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s">"say"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">say</span><span class="p">(</span><span class="n">optional_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s">"calculate"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">calculate</span><span class="p">(</span><span class="n">optional_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">""</span><span class="p">;</span>
+
+<span class="c1"># Function : Say something
+</span><span class="k">def</span> <span class="nf">say</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">message</span>
+    <span class="k">return</span> <span class="s">"Nothing to say"</span>
+
+<span class="c1"># Function : Calculate from calculating string
+</span><span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">calculating</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">calculating</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">calculating</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">'{} = {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">calculating</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"I'm confused with this calculating !!"</span>
+    <span class="k">return</span> <span class="s">"Please input calculating"</span>
+</code></pre></div></div>
+
+<p>Finally, reponse the result to Slack</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">....</span>
+
+    <span class="c1"># Get the ID of the channel where the message was posted.
+</span>    <span class="n">channel_id</span> <span class="o">=</span> <span class="n">slack_event</span><span class="p">[</span><span class="s">"channel"</span><span class="p">]</span>
+    <span class="c1"># Send result message to slack channel
+</span>    <span class="n">send_data_to_slack_api</span><span class="p">(</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">result_msg</span><span class="p">)</span>
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="p">....</span>
+
+<span class="c1"># Function : send message to slack api
+</span><span class="k">def</span> <span class="nf">send_data_to_slack_api</span><span class="p">(</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">parse</span><span class="p">.</span><span class="n">urlencode</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="s">"token"</span><span class="p">,</span> <span class="n">BOT_TOKEN</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">"channel"</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">"text"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">)</span>
+    <span class="c1"># Construct the HTTP request that will be sent to the Slack API.
+</span>    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">Request</span><span class="p">(</span>
+        <span class="n">SLACK_URL</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span>
+    <span class="p">)</span>
+    <span class="c1"># Add a header mentioning that the text is URL-encoded.
+</span>    <span class="n">request</span><span class="p">.</span><span class="n">add_header</span><span class="p">(</span>
+        <span class="s">"Content-Type"</span><span class="p">,</span>
+        <span class="s">"application/x-www-form-urlencoded"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Fire off the request!
+</span>    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The full code is here <a href="https://gist.github.com/anhnt1208/6c4b281ee07978634648248c5bf529d1">Gis</a></p>
+
+<h3 id="create-api-gateway">Create API Gateway</h3>
+<p>Go to <code class="language-plaintext highlighter-rouge">API Gateway</code> service from AWS Console manager.
+Create new API with follow info
+<img src="/img/20190531/image2019-5-30_13-42-54.png" alt="Create new API Gateway"></p>
+
+<p>At API Resources page, click <code class="language-plaintext highlighter-rouge">Action</code> → <code class="language-plaintext highlighter-rouge">Create Resource</code>
+We don’t need to enable <code class="language-plaintext highlighter-rouge">CORS</code> as the client will not be a browser
+<img src="/img/20190531/image2019-5-30_13-48-59.png" alt="Add new resource">
+Click <code class="language-plaintext highlighter-rouge">Create Resource</code></p>
+
+<h3 id="add-trigger-from-api-gateway-to-lambda">Add trigger from API Gateway to Lambda</h3>
+<p>At AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Service</code> → <code class="language-plaintext highlighter-rouge">API Gateway</code>
+Add <code class="language-plaintext highlighter-rouge">POST</code> method to resource <code class="language-plaintext highlighter-rouge">event-handler</code>
+<img src="/img/20190531/image2019-5-30_15-48-32.png" alt="Add method POST">
+Click <code class="language-plaintext highlighter-rouge">Save</code> and the pop-up will notify to add permission to Lambda Function, click <code class="language-plaintext highlighter-rouge">OK</code>
+After created the <code class="language-plaintext highlighter-rouge">POST</code> method will be
+<img src="/img/20190531/image2019-5-30_15-52-30.png" alt="created method"></p>
+
+<h3 id="deploy-api-gateway">Deploy API Gateway</h3>
+<p>At API Gateway screen, click <code class="language-plaintext highlighter-rouge">Action</code> → <code class="language-plaintext highlighter-rouge">Deploy API</code> , it will show pop-up as below
+<img src="/img/20190531/image2019-5-30_15-54-29.png" alt="Deploy API">
+Click <code class="language-plaintext highlighter-rouge">Deploy</code>
+After deployed API, we will have the API request URL for event-handler
+<img src="/img/20190531/image2019-5-30_16-0-45.png" alt="Deployed result">
+We will use this URL from <code class="language-plaintext highlighter-rouge">event-handler</code>, not from root <code class="language-plaintext highlighter-rouge">/</code> path
+Copy this URL for setting up Slack Bot
+Go to AWS Lambda, check it has already triggered with API Gateway
+<img src="/img/20190531/image2019-5-30_16-48-39.png" alt="Lambda trigger">
+<img src="/img/20190531/image2019-5-31_8-54-46.png" alt="API Gateway"></p>
+
+<h3 id="create-slack-bot">Create Slack Bot</h3>
+<p>For creating bot, we need permission to create app on Slack
+Or can create new self Slack Team at <a href="https://slack.com/create">here</a>
+At Main menu of Slack , click <code class="language-plaintext highlighter-rouge">Administration</code> → <code class="language-plaintext highlighter-rouge">Manager Apps</code>
+<img src="/img/20190531/image2019-5-30_16-13-3.png" alt="Manager Apps">
+Click <code class="language-plaintext highlighter-rouge">Build</code> → <code class="language-plaintext highlighter-rouge">Your Apps</code>
+<img src="/img/20190531/image2019-5-30_16-16-23.png" alt="Your Apps">
+Click <code class="language-plaintext highlighter-rouge">Create New App</code>
+<img src="/img/20190531/image2019-5-30_16-18-31.png" alt="Create new App">
+App Name can be what ever you want
+Click <code class="language-plaintext highlighter-rouge">Create App</code></p>
+
+<h3 id="setup-slack-bot">Setup Slack Bot</h3>
+<p>Go to <code class="language-plaintext highlighter-rouge">Bot Users</code> on left menu to Add Bot User
+Click <code class="language-plaintext highlighter-rouge">Add Bot User</code>
+<img src="/img/20190531/image2019-5-30_16-29-46.png" alt="Add Bot User"></p>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">Event Subscriptions</code> and enable event
+At request URL, enter the URL of API Gateway <code class="language-plaintext highlighter-rouge">event-handler</code>
+<img src="/img/20190531/image2019-5-30_16-27-45.png" alt="Add API URL"></p>
+
+<p>At <code class="language-plaintext highlighter-rouge">Subscribe</code> to Bot Events, add event <code class="language-plaintext highlighter-rouge">message.channels</code>
+<img src="/img/20190531/image2019-5-30_16-32-18.png" alt="Add Subscribe to Bot Events">
+With event <code class="language-plaintext highlighter-rouge">message.channels</code>, the bot will listen on the channel that it be added
+Click <code class="language-plaintext highlighter-rouge">Save Change</code></p>
+
+<p>Now go to <code class="language-plaintext highlighter-rouge">OAuth &amp; Permissions</code> on left menu
+<img src="/img/20190531/image2019-5-30_16-34-36.png" alt="OAuth &amp; Permissions"></p>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Install App to Workspace</code>
+<img src="/img/20190531/image2019-5-30_16-36-31.png" alt="Install App to Workspace"></p>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Authorize</code>
+At result screen, we need to get <code class="language-plaintext highlighter-rouge">Bot User OAuth Access Token</code> to allow AWS lambda send response to Slack API
+<img src="/img/20190531/image2019-5-30_16-38-35.png" alt="Authorize"></p>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">AWS Lambda</code> Service and edit function <code class="language-plaintext highlighter-rouge">TestSlackBot</code>
+At <code class="language-plaintext highlighter-rouge">Environment Variables</code>, add key <code class="language-plaintext highlighter-rouge">BOT_TOKEN</code> with value is the Bot User OAuth Access Token
+<img src="/img/20190531/image2019-5-30_16-41-7.png" alt="Environment Variables"></p>
+
+<h3 id="request-bot-on-slack">Request bot on Slack</h3>
+<p>Add bot to the channel that you want to run command
+<img src="/img/20190531/image2019-5-30_16-43-53.png" alt="Add Bot to channel">
+<img src="/img/20190531/image2019-5-30_16-44-20.png" alt="Added Bot to channel"></p>
+
+<p>Now, enter some messages to test bot
+<img src="/img/20190531/image2019-5-31_9-27-31.png" alt="Test bot"></p>
+
+<p>We can check lambda log at <code class="language-plaintext highlighter-rouge">AWS Cloud Watch</code> service
+<img src="/img/20190531/image2019-5-31_9-30-5.png" alt="API Log"></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#api-gateway" class="page__taxonomy-item p-category" rel="tag">API Gateway</a><span class="sep">, </span>
+    
+      <a href="/tags/#aws" class="page__taxonomy-item p-category" rel="tag">AWS</a><span class="sep">, </span>
+    
+      <a href="/tags/#lambda" class="page__taxonomy-item p-category" rel="tag">Lambda</a><span class="sep">, </span>
+    
+      <a href="/tags/#serverless" class="page__taxonomy-item p-category" rel="tag">Serverless</a><span class="sep">, </span>
+    
+      <a href="/tags/#slack" class="page__taxonomy-item p-category" rel="tag">Slack</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2019-05-31T00:00:00+00:00">May 31, 2019</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Create+Slack+Bot+with+AWS+Serverless%20%2Fcreate-slack-bot-with-aws-serverless%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fcreate-slack-bot-with-aws-serverless%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fcreate-slack-bot-with-aws-serverless%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/systemd-vs-init/" class="pagination--pager" title="Systemd vs /etc/init.d
+">Previous</a>
+    
+    
+      <a href="/include-diagram-into-md-with-mermaid/" class="pagination--pager" title="Include diagrams into Markdown with Mermaid
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/api-hub-architecture/" rel="permalink">API Hub - Part 01
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/include-diagram-into-md-with-mermaid/" rel="permalink">Include diagrams into Markdown with Mermaid
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Mermaid is a JavaScript based diagramming and charting tool that takes Markdown-inspired text definitions and creates diagrams dynamically in the browser. 
+M...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/systemd-vs-init/" rel="permalink">Systemd vs /etc/init.d
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">The init daemon is going to be replaced with daemon systemd on some of the Linux Distributions, while a lot of them have already implemented it. This is/will...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/IP-Addressing-Introduction-and-Classful-Addressing/" rel="permalink">IP Addressing - Introduction and Classful Addressing
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A classful network is a network addressing architecture used in the Internet from 1981 until the introduction of Classless Inter-Domain Routing (CIDR) in 199...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2024 Anton Nguyen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

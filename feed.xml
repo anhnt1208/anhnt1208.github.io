@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-02-26T02:11:21+00:00</updated><id>/feed.xml</id><title type="html">My Notion Book</title><subtitle>The Notion Book for all things related to the technology.</subtitle><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><entry><title type="html">API Hub - Part 01</title><link href="/api-hub-architecture/" rel="alternate" type="text/html" title="API Hub - Part 01" /><published>2024-02-24T00:00:00+00:00</published><updated>2024-02-24T00:00:00+00:00</updated><id>/api-hub-architecture</id><content type="html" xml:base="/api-hub-architecture/"><![CDATA[<h2 id="background">Background</h2>
+<p>An API hub serves as a centralized repository, allowing several projects can register and integrate all APIs seamlessly, utilizing a single key.</p>
+<ul>
+  <li>Internal API Hub: serve API for companies projects</li>
+  <li>External API Hub: Customers can register and use APIs for their projects,</li>
+</ul>
+
+<h2 id="project-goals">Project goals</h2>
+<ul>
+  <li>Reduce development cycles</li>
+  <li>Creating stickiness to applications and services</li>
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<h3 id="api-hub-overview">API Hub overview</h3>
+
+<p><img src="/assets/img/post/2024/02/20240224-api-hub-architecture.png" /></p>
+
+<h4 id="api-managment">API Managment</h4>
+<ul>
+  <li>Manage metadata about APIs in the API Hub ( Metadata, API docs )</li>
+  <li>Serving the UI that developers interact with to discover and view API details</li>
+</ul>
+
+<h4 id="api-gateway">API Gateway</h4>
+<ul>
+  <li>Enforcing gateway functionality: Authorization, rate limits, quota limits, transformations, etc…</li>
+  <li>Is independent of the API Managment.</li>
+</ul>
+
+<h4 id="internal-auth-service">Internal Auth Service</h4>
+<ul>
+  <li>Provide the tokens for internal services to communicate seamlessly with one another. Internal services are not required to be aware of the API KEY</li>
+</ul>
+
+<h4 id="config-service">Config Service</h4>
+<ul>
+  <li>Store the setting when register using service such as
+    <ul>
+      <li>Booking with/without payment ( Booking Service )</li>
+      <li>API KEY, Endpoint, Rate Limitation, Quota Limitation</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="payment-service-booking-service-">Payment Service, Booking Service, …</h4>
+<ul>
+  <li>Available services that project can register using</li>
+</ul>
+
+<h4 id="micro-fe-component-libraries">Micro FE/ Component Libraries</h4>
+<ul>
+  <li>Offered front-end components associated with registered services that enable developers to embed them directly into projects.</li>
+</ul>
+
+<h3 id="workflow">Workflow</h3>
+
+<h4 id="register-using-api-flow">Register using API Flow</h4>
+<p><img src="/assets/img/post/2024/02/20240224-api-register-service.png" /></p>
+
+<h4 id="use-booking-api-flow">Use Booking API Flow</h4>
+<p><img src="/assets/img/post/2024/02/20240224-api-use-booking-service.png" /></p>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="Architecture" /><category term="MicroService" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Include diagrams into Markdown with Mermaid</title><link href="/include-diagram-into-md-with-mermaid/" rel="alternate" type="text/html" title="Include diagrams into Markdown with Mermaid" /><published>2024-02-02T00:00:00+00:00</published><updated>2024-02-02T00:00:00+00:00</updated><id>/include-diagram-into-md-with-mermaid</id><content type="html" xml:base="/include-diagram-into-md-with-mermaid/"><![CDATA[<p><a href="https://github.com/mermaid-js/mermaid#readme"><strong>Mermaid</strong></a> is a JavaScript based diagramming and charting tool that takes Markdown-inspired text definitions and creates diagrams dynamically in the browser. 
+Maintained by Knut Sveidqvist, it supports a bunch of different common diagram types for software projects, including flowcharts, UML, Git graphs, user journey diagrams, and even the dreaded Gantt chart.</p>
+
+<p>Working with Knut and also the wider community at CommonMark, we’ve rolled out a change that will allow you to create graphs inline using <a href="https://mermaid.js.org/#/n00b-syntaxReference?id=syntax-structure">Mermaid syntax</a>, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+</code></pre></div></div>
+<p>The raw code block above will appear as this diagram in the rendered Markdown:</p>
+
+<p><img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVEQ7XG5BLS0-QjtcbkEtLT5DO1xuQi0tPkQ7XG5DLS0-RDsiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9fQ" /></p>
+
+<p>Mermaid has been getting increasingly popular with developers and has a rich community of contributors led by the maintainer Knut Sveidqvist. 
+We are very grateful for Knut’s support in bringing this feature to everyone on GitHub. 
+If you’d like to learn more about the Mermaid syntax, head over to the <a href="http://mermaid-js.github.io/mermaid/">Mermaid website</a> or check out Knut’s first official <a href="https://amzn.to/339uQRn">Mermaid book</a>.</p>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="Docs as Code" /><category term="Markdown" /><summary type="html"><![CDATA[Mermaid is a JavaScript based diagramming and charting tool that takes Markdown-inspired text definitions and creates diagrams dynamically in the browser. Maintained by Knut Sveidqvist, it supports a bunch of different common diagram types for software projects, including flowcharts, UML, Git graphs, user journey diagrams, and even the dreaded Gantt chart.]]></summary></entry><entry><title type="html">Create Slack Bot with AWS Serverless</title><link href="/create-slack-bot-with-aws-serverless/" rel="alternate" type="text/html" title="Create Slack Bot with AWS Serverless" /><published>2019-05-31T00:00:00+00:00</published><updated>2019-05-31T00:00:00+00:00</updated><id>/create-slack-bot-with-aws-serverless</id><content type="html" xml:base="/create-slack-bot-with-aws-serverless/"><![CDATA[<p>A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs.
+We will create simple bot that receive and process some simple task by entering command into channel
+Example :</p>
+<ul>
+  <li>Me : @abot calculate 1 + 2</li>
+  <li>Bot : 1 + 2 = 3</li>
+</ul>
+
+<p>The way the chat bot will work is the following:</p>
+<ul>
+  <li>User enter message into channel, ex. “@abot say hello”</li>
+  <li>Slack bot will send the request with this message to API Gateway</li>
+  <li>An AWS Lambda function processes the payload of the request and takes an appropriate action,then reply request to the Slack API
+We will need permission to create app on Slack, so on this Post we will create us self slack workspace</li>
+</ul>
+
+<h3 id="create-iam-role-to-enable-write-log-from-lambda">Create IAM Role to enable write log from Lambda</h3>
+<p>From AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Services</code> → <code class="language-plaintext highlighter-rouge">IAM</code>
+Create Role named <strong>AllowLambdaWriteLog</strong> that allow Lambda can able to write log with below policies</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"logs:CreateLogStream"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"logs:PutLogEvents"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:logs:*:*:*"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs:CreateLogGroup"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="create-aws-lambda">Create AWS Lambda</h3>
+<p>From AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Services</code> → <code class="language-plaintext highlighter-rouge">Lambda</code></p>
+<ul>
+  <li><strong>Name</strong> : TestSlackBot</li>
+  <li><strong>Runtime</strong> : Python 3.6</li>
+  <li><strong>Execution Role</strong> : use existing role <code class="language-plaintext highlighter-rouge">AllowLambdaWriteLog</code>
+<img src="/img/20190531/image2019-5-30_14-7-35.png" alt="Create new lambda function" />
+Then click <code class="language-plaintext highlighter-rouge">Create Function</code></li>
+</ul>
+
+<h3 id="implement-lambda-function">Implement Lambda function</h3>
+<p>First, declare and import some resources need to use</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+Slack chat-bot Lambda handler.
+"""</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># Use logger for debug and logging
+</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># Grab the Bot OAuth token from the environment.
+</span><span class="n">BOT_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"BOT_TOKEN"</span><span class="p">]</span>
+
+<span class="c1"># Define the URL of the targeted Slack API resource.
+</span><span class="n">SLACK_URL</span> <span class="o">=</span> <span class="s">"https://slack.com/api/chat.postMessage"</span>
+
+<span class="c1"># Main handler
+</span><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+</code></pre></div></div>
+
+<p>When setup Slack API resource, Slack require to verify the API URL by the challenger request.
+We need add below code to reply this challenger request</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Required for valid challenge request from slack api
+</span>    <span class="k">if</span> <span class="s">"challenge"</span> <span class="ow">in</span> <span class="n">event</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">event</span><span class="p">[</span><span class="s">"challenge"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Continue, detach command from the message from the user send to bot</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Main handler
+</span><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">....</span>
+
+    <span class="c1"># Grab the Slack event data.
+</span>    <span class="n">slack_event</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s">"event"</span><span class="p">]</span>
+    <span class="c1"># Check message has been sent from bot
+</span>    <span class="k">if</span> <span class="s">"bot_id"</span> <span class="ow">in</span> <span class="n">slack_event</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="c1"># Detach command from the message that user sent to bot,
+</span>    <span class="n">text</span> <span class="o">=</span> <span class="n">slack_event</span><span class="p">[</span><span class="s">"text"</span><span class="p">]</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="n">detach_command</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">matched</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched message. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="c1"># Function : Detach command from message
+</span><span class="k">def</span> <span class="nf">detach_command</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="c1"># Match message format : &lt;@bot_id&gt; &lt;command&gt; [option message]
+</span>    <span class="n">matched</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">"&lt;@(\w+)&gt;[\s](\w+)(.*)"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">matched</span><span class="p">:</span>
+        <span class="c1"># matched data must be {'bot_id', 'command', 'optional'}
+</span>        <span class="k">return</span> <span class="n">matched</span><span class="p">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>Now, we will process the command that detached from message</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">......</span>
+
+    <span class="c1"># process command
+</span>    <span class="n">bot_id</span>  <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="n">optional_data</span> <span class="o">=</span> <span class="n">matched</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">strip</span><span class="p">();</span>
+    <span class="k">if</span> <span class="n">bot_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s">"authed_users"</span><span class="p">]:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched command. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+    <span class="n">result_msg</span> <span class="o">=</span> <span class="n">process_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">optional_data</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">result_msg</span> <span class="o">==</span> <span class="s">""</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Not matched command. Ignore bot event"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">"200 OK"</span>
+
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="c1"># Function : Detach command from message
+</span><span class="k">def</span> <span class="nf">detach_command</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="p">....</span>
+
+<span class="c1"># Function : process the command
+</span><span class="k">def</span> <span class="nf">process_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">optional_data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s">"say"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">say</span><span class="p">(</span><span class="n">optional_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s">"calculate"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">calculate</span><span class="p">(</span><span class="n">optional_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">""</span><span class="p">;</span>
+
+<span class="c1"># Function : Say something
+</span><span class="k">def</span> <span class="nf">say</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">message</span>
+    <span class="k">return</span> <span class="s">"Nothing to say"</span>
+
+<span class="c1"># Function : Calculate from calculating string
+</span><span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">calculating</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">calculating</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">calculating</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">'{} = {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">calculating</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"I'm confused with this calculating !!"</span>
+    <span class="k">return</span> <span class="s">"Please input calculating"</span>
+</code></pre></div></div>
+
+<p>Finally, reponse the result to Slack</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="p">....</span>
+
+    <span class="c1"># Get the ID of the channel where the message was posted.
+</span>    <span class="n">channel_id</span> <span class="o">=</span> <span class="n">slack_event</span><span class="p">[</span><span class="s">"channel"</span><span class="p">]</span>
+    <span class="c1"># Send result message to slack channel
+</span>    <span class="n">send_data_to_slack_api</span><span class="p">(</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">result_msg</span><span class="p">)</span>
+
+    <span class="c1"># Everything went fine.
+</span>    <span class="k">return</span> <span class="s">"200 OK"</span>
+
+<span class="p">....</span>
+
+<span class="c1"># Function : send message to slack api
+</span><span class="k">def</span> <span class="nf">send_data_to_slack_api</span><span class="p">(</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">parse</span><span class="p">.</span><span class="n">urlencode</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="s">"token"</span><span class="p">,</span> <span class="n">BOT_TOKEN</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">"channel"</span><span class="p">,</span> <span class="n">channel_id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">"text"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">)</span>
+    <span class="c1"># Construct the HTTP request that will be sent to the Slack API.
+</span>    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">Request</span><span class="p">(</span>
+        <span class="n">SLACK_URL</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span>
+    <span class="p">)</span>
+    <span class="c1"># Add a header mentioning that the text is URL-encoded.
+</span>    <span class="n">request</span><span class="p">.</span><span class="n">add_header</span><span class="p">(</span>
+        <span class="s">"Content-Type"</span><span class="p">,</span>
+        <span class="s">"application/x-www-form-urlencoded"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Fire off the request!
+</span>    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The full code is here <a href="https://gist.github.com/anhnt1208/6c4b281ee07978634648248c5bf529d1">Gis</a></p>
+
+<h3 id="create-api-gateway">Create API Gateway</h3>
+<p>Go to <code class="language-plaintext highlighter-rouge">API Gateway</code> service from AWS Console manager.
+Create new API with follow info
+<img src="/img/20190531/image2019-5-30_13-42-54.png" alt="Create new API Gateway" /></p>
+
+<p>At API Resources page, click <code class="language-plaintext highlighter-rouge">Action</code> → <code class="language-plaintext highlighter-rouge">Create Resource</code>
+We don’t need to enable <code class="language-plaintext highlighter-rouge">CORS</code> as the client will not be a browser
+<img src="/img/20190531/image2019-5-30_13-48-59.png" alt="Add new resource" />
+Click <code class="language-plaintext highlighter-rouge">Create Resource</code></p>
+
+<h3 id="add-trigger-from-api-gateway-to-lambda">Add trigger from API Gateway to Lambda</h3>
+<p>At AWS Console manager, go to <code class="language-plaintext highlighter-rouge">Service</code> → <code class="language-plaintext highlighter-rouge">API Gateway</code>
+Add <code class="language-plaintext highlighter-rouge">POST</code> method to resource <code class="language-plaintext highlighter-rouge">event-handler</code>
+<img src="/img/20190531/image2019-5-30_15-48-32.png" alt="Add method POST" />
+Click <code class="language-plaintext highlighter-rouge">Save</code> and the pop-up will notify to add permission to Lambda Function, click <code class="language-plaintext highlighter-rouge">OK</code>
+After created the <code class="language-plaintext highlighter-rouge">POST</code> method will be
+<img src="/img/20190531/image2019-5-30_15-52-30.png" alt="created method" /></p>
+
+<h3 id="deploy-api-gateway">Deploy API Gateway</h3>
+<p>At API Gateway screen, click <code class="language-plaintext highlighter-rouge">Action</code> → <code class="language-plaintext highlighter-rouge">Deploy API</code> , it will show pop-up as below
+<img src="/img/20190531/image2019-5-30_15-54-29.png" alt="Deploy API" />
+Click <code class="language-plaintext highlighter-rouge">Deploy</code>
+After deployed API, we will have the API request URL for event-handler
+<img src="/img/20190531/image2019-5-30_16-0-45.png" alt="Deployed result" />
+We will use this URL from <code class="language-plaintext highlighter-rouge">event-handler</code>, not from root <code class="language-plaintext highlighter-rouge">/</code> path
+Copy this URL for setting up Slack Bot
+Go to AWS Lambda, check it has already triggered with API Gateway
+<img src="/img/20190531/image2019-5-30_16-48-39.png" alt="Lambda trigger" />
+<img src="/img/20190531/image2019-5-31_8-54-46.png" alt="API Gateway" /></p>
+
+<h3 id="create-slack-bot">Create Slack Bot</h3>
+<p>For creating bot, we need permission to create app on Slack
+Or can create new self Slack Team at <a href="https://slack.com/create">here</a>
+At Main menu of Slack , click <code class="language-plaintext highlighter-rouge">Administration</code> → <code class="language-plaintext highlighter-rouge">Manager Apps</code>
+<img src="/img/20190531/image2019-5-30_16-13-3.png" alt="Manager Apps" />
+Click <code class="language-plaintext highlighter-rouge">Build</code> → <code class="language-plaintext highlighter-rouge">Your Apps</code>
+<img src="/img/20190531/image2019-5-30_16-16-23.png" alt="Your Apps" />
+Click <code class="language-plaintext highlighter-rouge">Create New App</code>
+<img src="/img/20190531/image2019-5-30_16-18-31.png" alt="Create new App" />
+App Name can be what ever you want
+Click <code class="language-plaintext highlighter-rouge">Create App</code></p>
+
+<h3 id="setup-slack-bot">Setup Slack Bot</h3>
+<p>Go to <code class="language-plaintext highlighter-rouge">Bot Users</code> on left menu to Add Bot User
+Click <code class="language-plaintext highlighter-rouge">Add Bot User</code>
+<img src="/img/20190531/image2019-5-30_16-29-46.png" alt="Add Bot User" /></p>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">Event Subscriptions</code> and enable event
+At request URL, enter the URL of API Gateway <code class="language-plaintext highlighter-rouge">event-handler</code>
+<img src="/img/20190531/image2019-5-30_16-27-45.png" alt="Add API URL" /></p>
+
+<p>At <code class="language-plaintext highlighter-rouge">Subscribe</code> to Bot Events, add event <code class="language-plaintext highlighter-rouge">message.channels</code>
+<img src="/img/20190531/image2019-5-30_16-32-18.png" alt="Add Subscribe to Bot Events" />
+With event <code class="language-plaintext highlighter-rouge">message.channels</code>, the bot will listen on the channel that it be added
+Click <code class="language-plaintext highlighter-rouge">Save Change</code></p>
+
+<p>Now go to <code class="language-plaintext highlighter-rouge">OAuth &amp; Permissions</code> on left menu
+<img src="/img/20190531/image2019-5-30_16-34-36.png" alt="OAuth &amp; Permissions" /></p>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Install App to Workspace</code>
+<img src="/img/20190531/image2019-5-30_16-36-31.png" alt="Install App to Workspace" /></p>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Authorize</code>
+At result screen, we need to get <code class="language-plaintext highlighter-rouge">Bot User OAuth Access Token</code> to allow AWS lambda send response to Slack API
+<img src="/img/20190531/image2019-5-30_16-38-35.png" alt="Authorize" /></p>
+
+<p>Go to <code class="language-plaintext highlighter-rouge">AWS Lambda</code> Service and edit function <code class="language-plaintext highlighter-rouge">TestSlackBot</code>
+At <code class="language-plaintext highlighter-rouge">Environment Variables</code>, add key <code class="language-plaintext highlighter-rouge">BOT_TOKEN</code> with value is the Bot User OAuth Access Token
+<img src="/img/20190531/image2019-5-30_16-41-7.png" alt="Environment Variables" /></p>
+
+<h3 id="request-bot-on-slack">Request bot on Slack</h3>
+<p>Add bot to the channel that you want to run command
+<img src="/img/20190531/image2019-5-30_16-43-53.png" alt="Add Bot to channel" />
+<img src="/img/20190531/image2019-5-30_16-44-20.png" alt="Added Bot to channel" /></p>
+
+<p>Now, enter some messages to test bot
+<img src="/img/20190531/image2019-5-31_9-27-31.png" alt="Test bot" /></p>
+
+<p>We can check lambda log at <code class="language-plaintext highlighter-rouge">AWS Cloud Watch</code> service
+<img src="/img/20190531/image2019-5-31_9-30-5.png" alt="API Log" /></p>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="AWS" /><category term="Slack" /><category term="Serverless" /><category term="API Gateway" /><category term="Lambda" /><summary type="html"><![CDATA[A bot is a nifty way to run code and automate tasks. In Slack, a bot is controlled programmatically via a bot user token that can access one or more of Slack’s APIs. We will create simple bot that receive and process some simple task by entering command into channel Example : Me : @abot calculate 1 + 2 Bot : 1 + 2 = 3]]></summary></entry><entry><title type="html">Systemd vs /etc/init.d</title><link href="/systemd-vs-init/" rel="alternate" type="text/html" title="Systemd vs /etc/init.d" /><published>2019-05-27T00:00:00+00:00</published><updated>2019-05-27T00:00:00+00:00</updated><id>/systemd-vs-init</id><content type="html" xml:base="/systemd-vs-init/"><![CDATA[<p>The init daemon is going to be replaced with daemon systemd on some of the Linux Distributions, while a lot of them have already implemented it. This is/will be creating a huge gap between traditional Unix/Linux Guard and New Linux Guard – programmers and System Admins.</p>
+
+<h2 id="what-is-init-">What is Init ?</h2>
+<p>The init is a daemon process which starts as soon as the computer starts and continue running till, it is shutdown. Init is the first process that starts when a computer boots, making it the parent of all other running processes directly or indirectly and hence typically it is assigned “pid=1“.</p>
+
+<p>If somehow init daemon could not start, no process will be started and the system will reach a stage called “Kernel Panic“. init is most commonly referred to as System V init. System V is the first commercial UNIX Operating System designed and usages of init on most of the Linux Distribution of today is identical with System V OS with a few exception like Slackware using BSD-style and Gentoo using custom init.</p>
+
+<p>init stores startup scripts at <code class="language-plaintext highlighter-rouge">/etc/init.d/</code></p>
+
+<p>The need to replace init with something more perfect was felt from a long time and several alternatives were developed from time-to-time, some of which became distribution’s native init replacement, some of which are:</p>
+<ul>
+  <li><strong>Upstart</strong> : A init replacement daemon implemented in Ubuntu GNU/Linux and designed to start process asynchronously.</li>
+  <li><strong>Epoch</strong> : A init replacement daemon built around simplicity and service management, designed to start process single-threaded.</li>
+  <li><strong>Mudar</strong> : A init replacement daemon written in Python, implemented on Pardus GNU/Linux and designed to start process asynchronously.</li>
+  <li><strong>systemd</strong> : A init replacement daemon designed to start process in parallel, implemented in a number of standard distribution – Fedora, OpenSuSE, Arch, RHEL, CentOS, etc.</li>
+</ul>
+
+<h2 id="what-is-systemd">What is systemd?</h2>
+<p>A systemd is a System Management Daemon named with UNIX convention to add ‘d‘ at the end of daemon. So, that they can be easily recognized.
+Initially it was released under GNU General Public License, but now the releases are made under GNU Lesser General Public License.
+Similar to init, systemd is the parent of all other processes directly or indirectly and is the first process that starts at boot hence typically assigned a “pid=1“.</p>
+
+<p>A systemd, may refer to all the packages, utilities and libraries around daemon.
+It was designed to overcome the shortcomings of init.
+It itself is a background processes which is designed to start processes in parallel, thus reducing the boot time and computational overhead.
+It has a lot other features as compared to init.</p>
+
+<p>Systemd keeps startup scripts at <code class="language-plaintext highlighter-rouge">/lib/systemd</code>, and symbolic links of them are contained at <code class="language-plaintext highlighter-rouge">/etc/systemd</code></p>
+
+<h2 id="why-there-was-a-need-to-replace-init">Why there was a need to replace init?</h2>
+<p>A init process starts serially i.e., one task starts only after the last task startup was successful and it was loaded in the memory. This often resulted into delayed and long booting time. However, systemd was not designed for speed but for getting the things done neatly which in turns avoid all the UN-necessary delay.</p>
+
+<p>systemd-analyze
+systemd-analyze blame
+journalctl -u apt-daily-upgrade -b</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Features</th>
+      <th>init</th>
+      <th>systemd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DBus Dependency – Mandatory</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Device based Activation</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Device dependency configuration with udev</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Timer based Activation</td>
+      <td>Cron/at</td>
+      <td>Proprietary</td>
+    </tr>
+    <tr>
+      <td>Quota Management</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Automatic Service Dependency Handling</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Kills users Process at logout</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Swap Management</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SELinux integration</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Support for Encrypted HDD</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Static kernle module loading</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GUI</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>List all the child processes</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Sysv compatible</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Interactive booting</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Portable to non x86</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Adopted on</td>
+      <td>Several Distro</td>
+      <td>Several Distro</td>
+    </tr>
+    <tr>
+      <td>Parallel service startup</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Resource limit per service</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Easy extensible startup script</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Separate Code and Configuration File</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Automatic dependency calculation</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Verbose debug</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td>N/A</td>
+      <td>V44+</td>
+    </tr>
+    <tr>
+      <td>Size</td>
+      <td>560 KB</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Number of Files</td>
+      <td>75 files</td>
+      <td>900 files + glib + DBus</td>
+    </tr>
+    <tr>
+      <td>Lines of code – LOC</td>
+      <td>15000 (Approx)</td>
+      <td>224000 (Approx) (inc Codes, comments and white space) 125000 (Approx) (acctual code)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="sysvinit-to-systemd-cheatsheet">SysVinit to Systemd Cheatsheet</h2>
+<p>|Sysvinit|Command|Systemd Command Notes|
+|——–|—-|——-|
+|service <service-name> start|systemctl start <service-name>|Used to start a service \(not reboot persistent)|
+|service <service-name> stop|systemctl stop <service-name>|Used to stop a service \(not reboot persistent)|
+|service <service-name> restart|systemctl restart <service-name>|Used to stop and then start a service|
+|service <service-name> reload|systemctl reload <service-name>|When supported, reloads the config file without interrupting pending operations.|
+|service <service-name> condrestart|systemctl condrestart <service-name>|Restarts if the service is already running.|
+|service <service-name> status|systemctl status <service-name>|Tells whether a service is currently running.|
+|ls /etc/rc.d/init.d/|systemctl \(or) systemctl list-unit-files --type=service \(or) ls /lib/systemd/system/\*.service /etc/systemd/system/\*.service|Used to list the services that can be started or stopped. Used to list all the services and other units|
+|chkconfig <service-name> on|systemctl enable <service-name>|Turn the service on, for start at next boot, or other trigger.|
+|chkconfig <service-name> off|systemctl disable <service-name>|Turn the service off for the next reboot, or any other trigger.|
+|chkconfig <service-name>|systemctl is-enabled <service-name>|Used to check whether a service is configured to start or not in the current environment.|
+|chkconfig --list|systemctl list-unit-files --type=service \(or) ls /etc/systemd/system/\*.wants/|Print a table of services that lists which runlevels each is configured on or off|
+|chkconfig --list \| grep 5:on|systemctl list-dependencies graphical.target|Print a table of services that will be started when booting into graphical mode|
+|chkconfig <service-name> --list|ls /etc/systemd/system/\*.wants/<service-name>.service|Used to list what levels this service is configured on or off|
+|chkconfig <service-name> --add|systemctl daemon-reload|Used when you create a new service file or modify any configuration|</service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></p>
+
+<h2 id="analyze-the-boot-process-with-the-blame-command">Analyze the boot process with the blame command</h2>
+<p>Run <code class="language-plaintext highlighter-rouge">systemd-analyze</code> without any extra commands will display the last boot statistics</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemd-analyze
+Startup finished <span class="k">in </span>4.038s <span class="o">(</span>kernel<span class="o">)</span> + 25.119s <span class="o">(</span>userspace<span class="o">)</span> <span class="o">=</span> 29.157s
+graphical.target reached after 23.117s <span class="k">in </span>userspace
+</code></pre></div></div>
+<p>Run <code class="language-plaintext highlighter-rouge">systemd-analyze blame</code> to get a verbose output</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemd-analyze blame
+  4.392s apt-daily-upgrade.service
+  2.777s cloud-init-local.service
+  2.533s apparmor.service
+  2.309s pollinate.service
+  2.187s dev-xvda1.device
+  1.374s cloud-init.service
+  1.248s cloud-config.service
+</code></pre></div></div>
+<p>To view full log service status</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>journalctl <span class="nt">-u</span> &lt;service-name&gt;
+</code></pre></div></div>
+<p>To dump our boot info into a plot data</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemd-analyze plot <span class="o">&gt;</span> /tmp/plot.svg
+eog /tmp/plot.svg
+</code></pre></div></div>
+
+<h3 id="references">References</h3>
+<p><a href="https://www.tecmint.com/systemd-replaces-init-in-linux">systemd replaces init in linux</a>
+<a href="http://0pointer.de/blog/projects/blame-game.html">blame systemd</a>
+<a href="https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet">SysVinit to Systemd Cheatsheet</a></p>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="unix" /><category term="ubuntu" /><summary type="html"><![CDATA[The init daemon is going to be replaced with daemon systemd on some of the Linux Distributions, while a lot of them have already implemented it. This is/will be creating a huge gap between traditional Unix/Linux Guard and New Linux Guard – programmers and System Admins.]]></summary></entry><entry><title type="html">IP Addressing - Introduction and Classful Addressing</title><link href="/IP-Addressing-Introduction-and-Classful-Addressing/" rel="alternate" type="text/html" title="IP Addressing - Introduction and Classful Addressing" /><published>2019-04-21T00:00:00+00:00</published><updated>2019-04-21T00:00:00+00:00</updated><id>/IP-Addressing-Introduction-and-Classful-Addressing</id><content type="html" xml:base="/IP-Addressing-Introduction-and-Classful-Addressing/"><![CDATA[<p>A <strong>classful network</strong> is a network addressing architecture used in the Internet from 1981 until the introduction of <strong>Classless Inter-Domain Routing (CIDR)</strong> in 1993.
+The method divides the IP address space for <strong>Internet Protocol version 4</strong> (IPv4) into five address classes based on the leading four address bits.</p>
+
+<h2 id="ip-addressing">IP Addressing</h2>
+<p>Each TCP/IP host is identified by a logical IP address.
+The IP address is a network layer address and has no dependence on the data link layer address
+(such as a MAC address of a network interfacecard).
+A unique IP address is required for each host and network component that communicates using TCP/IP.
+Each IP address is divided into two parts : <strong>Network ID</strong> and <strong>Host ID</strong>.</p>
+<ul>
+  <li>The <strong>network ID</strong> (also known as a network address) identifies the systems that are located on thesame physical network bounded by IP routers.
+All systems on the same physical network must havethe same network ID.
+The <strong>network ID</strong> must be unique to the internetwork.</li>
+  <li>The host ID (also known as a host address) identifies a workstation, server, router, or otherTCP/IP host within a network.</li>
+</ul>
+
+<p>The address for each host must be unique to the network ID
+An IP address is 32 bits long.
+Rather than working with 32 bits at a time, it is a common practice tosegment the 32 bits of the IP address into four 8-bit fields called octets.
+Each octet is converted to adecimal number (the Base 10 numbering system) in the range 0-255 and separated by a period (adot).
+This format is called <strong>dotted decimal notation</strong>.
+<img src="https://www.geeksforgeeks.org/wp-content/uploads/IP_addressing_1.jpg" alt="" /></p>
+
+<h2 id="address-classes">Address Classes</h2>
+<h3 id="class-a">Class A</h3>
+<p>Class A addresses are assigned to networks with a very large number of hosts.
+The high-order bit in aclass A address is always set to zero.
+The next seven bits (completing the first octet) complete the network ID.
+The remaining 24 bits (the last three octets) represent the host ID.
+This allows for 126 networks and 16,777,214 hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2_2.png" alt="" /></p>
+
+<h3 id="class-b">Class B</h3>
+<p>Class B addresses are assigned to medium-sized to large-sized networks.
+The two high-order bits in aclass B address are always set to binary <strong>1 0</strong>.
+The next 14 bits (completing the first two octets)complete the network ID.
+The remaining 16 bits (last two octets) represent the host ID.
+This allows for16,384 networks and 65,534 hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2-3.png" alt="" /></p>
+
+<h3 id="class-c">Class C</h3>
+<p>Class C addresses are used for small networks.
+The three high-order bits in a class C address arealways set to binary <strong>1 1 0</strong>.
+The next 21 bits (completing the first three octets) complete the network ID.
+The remaining 8 bits (last octet) represent the host ID.
+This allows for 2,097,152 networks and 254hosts per network.
+<img src="https://miro-icmfxmvdkqz7ku.stackpathdns.com/wp-content/uploads/Intro-to-Networking-Part-2_4.png" alt="" /></p>
+
+<h3 id="class-d">Class D</h3>
+<p>Class D addresses are reserved for IP multicast addresses.
+The four high-order bits in a class D address are always set to binary <strong>1 1 1 0</strong>.
+The remaining bits are for the address that interested hostswill recognize.
+Class D does not posses any sub-net mask.
+Microsoft supports class D addresses for applications to multicast data to multicast-capable hosts on an internetwork.</p>
+
+<h3 id="class-e">Class E</h3>
+<p>class E addresses are reserved for experimental and research purposes.
+The high-order bits in a classE address are set to <strong>1 1 1 1</strong>.
+This class doesn’t have any sub-net mask.</p>
+
+<h2 id="network-id-guidelines">Network ID Guidelines</h2>
+<p>The network ID identifies the TCP/IP hosts that are located on the same physical network.
+All hosts on the same physical network must be assigned the same network ID to communicate with each other</p>
+<ul>
+  <li>The network address must be unique to the IP internetwork. If you plan on having a direct routed connection to the public Internet, the network ID must be unique to the Internet.
+If you do not plan onconnecting to the public Internet, the local network ID must be unique to your private internetwork.</li>
+  <li>The network ID cannot begin with the number 127. The number 127 in a class A address isreserved for internal loopback functions.</li>
+  <li>All bits within the network ID cannot be set to 1. All 1’s in the network ID are reserved for use as an IP broadcast address.</li>
+  <li>All bits within the network ID cannot be set to 0. All 0’s in the network ID are used to denote aspecific host on the local network and will not be routed.</li>
+</ul>
+
+<h2 id="host-id-guidelines">Host ID Guidelines</h2>
+<p>The host ID identifies a TCP/IP host within a network.
+The combination of IP network ID and IP host IDis an IP address.
+Follow these guidelines when assigning a host ID:</p>
+<ul>
+  <li>The host ID must be unique to the network ID.</li>
+  <li>All bits within the host ID cannot be set to 1, because this host ID is reserved as a broadcast address to send a packet to all hosts on a network.</li>
+  <li>All bits in the host ID cannot be set to 0, because this host ID is reserved to denote the IP networkID.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Leading bits</th>
+      <th>Size of network  number bit field</th>
+      <th>Number of Networks</th>
+      <th>Hosts per Network</th>
+      <th>ID range</th>
+      <th>Default subnet mask</th>
+      <th>CIDR notation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>0</td>
+      <td>8</td>
+      <td>128 (2^7)</td>
+      <td>2^24 – 2 = 16,777,24</td>
+      <td>0.0.0.0 ~ 126.0.0.0</td>
+      <td>255.0.0.0</td>
+      <td>/8</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>10</td>
+      <td>16</td>
+      <td>16,384 (2^14)</td>
+      <td>2^16 – 2 = 65,534</td>
+      <td>128.0.0.0 ~ 191.255.0.0</td>
+      <td>255.255.0.0</td>
+      <td>/16</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>110</td>
+      <td>24</td>
+      <td>2,097,152 (2^21)</td>
+      <td>2^8 – 2 = 254</td>
+      <td>192.0.0.0 ~ 223.255.255.0</td>
+      <td>255.255.255.0</td>
+      <td>/24</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The number of addresses usable for addressing specific hosts in each network is always <strong>2N - 2</strong>,
+where <em>N</em> is the number of rest field bits, and the subtraction of <em>2</em> adjusts for the use of the all-bits-zero host portion for network address and the all-bits-one host portion as a broadcast address.
+Thus, for a Class C address with 8 bits available in the host field, the maximum number of hosts is 254.</p>
+
+<p>Today, IP addresses are associated with a subnet mask.
+This was not required in a classful network because the mask was implied by the address itself.
+Any network device would inspect the first few bits of the IP address to determine the class of the address and thus its netmask.</p>
+
+<p>The blocks numerically at the start and end of classes A, B and C were originally reserved for special addressing or future features</p>
+<ul>
+  <li>0.0.0.0/8 and 127.0.0.0/8 are reserved in former class A.
+While the 127.0.0.0/8 network is a Class A network, it is designated for loopback and cannot be assigned to a network</li>
+  <li>128.0.0.0/16 and 191.255.0.0/16 were reserved in former class B but are now available for assignment;</li>
+  <li>192.0.0.0/24 and 223.255.255.0/24 are reserved in former class C.</li>
+</ul>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="infrastructure" /><summary type="html"><![CDATA[A classful network is a network addressing architecture used in the Internet from 1981 until the introduction of Classless Inter-Domain Routing (CIDR) in 1993. The method divides the IP address space for Internet Protocol version 4 (IPv4) into five address classes based on the leading four address bits.]]></summary></entry><entry><title type="html">How to Optimize MySQL Queries for Speed and Performance</title><link href="/How-to-optimize-mysql-queries/" rel="alternate" type="text/html" title="How to Optimize MySQL Queries for Speed and Performance" /><published>2019-03-30T00:00:00+00:00</published><updated>2019-03-30T00:00:00+00:00</updated><id>/How-to-optimize-mysql-queries</id><content type="html" xml:base="/How-to-optimize-mysql-queries/"><![CDATA[<h3 id="tip-1-using-index">Tip #1: Using Index</h3>
+<h4 id="index-all-columns-used-in-where-order-by-and-group-by-clauses">Index All Columns Used in <code class="language-plaintext highlighter-rouge">where</code>, <code class="language-plaintext highlighter-rouge">order by</code>, and <code class="language-plaintext highlighter-rouge">group by</code> Clauses</h4>
+<p>An index is also very useful when it comes to sorting records.
+Check the explain statement of query from the table with 500 rows without index</p>
+<pre><code class="language-mysql">mysql&gt; explain select customer_id, customer_name from customers where customer_id='140385';
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table     | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | customers | NULL       | ALL  | NULL          | NULL | NULL    | NULL |  500 |    10.00 | Using where |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+</code></pre>
+<p>First, it is clear that MySQL will conduct a full table scan because key column is <code class="language-plaintext highlighter-rouge">NULL</code>.
+Second, MySQL server has clearly indicated that it’s going to conduct a full scan on the 500 rows in our database.
+To optimize the above query, we can just add an index to the <code class="language-plaintext highlighter-rouge">customer_id</code> field</p>
+<pre><code class="language-mysql">mysql&gt; Create index customer_id ON customers (customer_Id);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; Explain select customer_id, customer_name from customers where customer_id='140385';
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+| id | select_type | table     | partitions | type | possible_keys | key         | key_len | ref   | rows | filtered | Extra |
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | customers | NULL       | ref  | customer_id   | customer_id | 13      | const |    1 |   100.00 | NULL  |
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+</code></pre>
+<p>You can clearly see that the number of rows to scan will be 1</p>
+<h4 id="use-index-prefixes">Use Index Prefixes</h4>
+<p>Indexing only a prefix of column values in this way can make the index file much smaller.
+When you index a BLOB or TEXT column, you must specify a prefix length for the index.</p>
+<pre><code class="language-mysql">CREATE TABLE test (blob_col BLOB, INDEX(blob_col(10)));
+</code></pre>
+<p>Read more at <a href="https://dev.mysql.com/doc/refman/8.0/en/column-indexes.html">Column-Indexes</a></p>
+
+<h4 id="multiple-column-indexes">Multiple-Column Indexes</h4>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/multiple-column-indexes.html">Multiple-Column Indexes</a></p>
+
+<h3 id="tip-2-optimize-like-statements-with-union-clause">Tip #2: Optimize Like Statements With Union Clause</h3>
+<p>When want to select with like statment in 2 fields
+Don’t use <code class="language-plaintext highlighter-rouge">like</code> statement with <code class="language-plaintext highlighter-rouge">or</code></p>
+<pre><code class="language-mysql">mysql&gt; select * from students where first_name like  'Ade%'  or last_name like 'Ade%' ;
+</code></pre>
+<p>Use <code class="language-plaintext highlighter-rouge">union</code> instead</p>
+<pre><code class="language-mysql">mysql&gt; select  from students where first_name like  'Ade%'
+union all select  from students where last_name like  'Ade%' ;
+</code></pre>
+<p>In fact, we should avoid Like Expressions With Leading Wildcards to search text in table,
+MySQL is not able to utilize indexes when there is a leading wildcard in a query.
+With example at tip #2, a search <code class="language-plaintext highlighter-rouge">like</code> this will cause MySQL to perform <em>full table scan</em> even
+if you have indexed the ‘first_name’ field on the students table</p>
+<pre><code class="language-mysql">mysql&gt; explain select * from students where first_name like  '%Ade'  ;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | students | NULL       | ALL  | NULL          | NULL | NULL    | NULL |  500 |    11.11 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+</code></pre>
+<p>Better way is using search engine ( elastic, redis, sphinx, … ).</p>
+
+<h3 id="tip-3-take-advantage-of-mysql-full-text-searches">Tip #3: Take Advantage of MySQL Full-Text Searches</h3>
+<p>Using MySQL full-text search (FTS) because it is far much faster than queries using wildcard characters
+To add a full-text search index to the students sample table, we can use the below MySQL command</p>
+<pre><code class="language-mysql">mysql&gt;Alter table students ADD FULLTEXT (first_name, last_name);
+mysql&gt; explain Select * from students where match(first_name, last_name) AGAINST ('Ade');
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+| id | select_type | table    | partitions | type     | possible_keys | key        | key_len | ref   | rows | filtered | Extra                         |
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+|  1 | SIMPLE      | students | NULL       | fulltext | first_name    | first_name | 0       | const |    1 |   100.00 | Using where; Ft_hints: sorted |
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+</code></pre>
+
+<h3 id="tip-4-optimize-your-database-schema">Tip #4: Optimize Your Database Schema</h3>
+<h4 id="normalize-tables">Normalize Tables</h4>
+<p>Design table with following normal forms :</p>
+<ul>
+  <li>First Normal Form (1NF)</li>
+  <li>Second Normal Form (2NF)</li>
+  <li>Third Normal Form (3NF)</li>
+  <li>Boyce and Codd Normal Form (BCNF)</li>
+  <li>Fourth Normal Form (4NF)</li>
+</ul>
+
+<p>Always use the same data type for storing similar values even if they are on different tables
+Example : the data type of field <code class="language-plaintext highlighter-rouge">customer_id</code> should be same as INT type on both tables <code class="language-plaintext highlighter-rouge">customer</code> and <code class="language-plaintext highlighter-rouge">order</code></p>
+
+<h4 id="use-optimal-data-types">Use Optimal Data Types</h4>
+<p>Use right data type for each fields and shorter is always better
+For instances, if use design field to store item type that having value less than 255
+Using <code class="language-plaintext highlighter-rouge">TINYINT</code> is better than <code class="language-plaintext highlighter-rouge">INT</code>
+And use <code class="language-plaintext highlighter-rouge">DATETIME</code> for the fields expects a date value</p>
+
+<h4 id="avoid-null-values">Avoid <code class="language-plaintext highlighter-rouge">Null</code> Values</h4>
+<p>Should avoid this kind of values whenever possible because they can harm your database results.
+Take a look at <a href="https://dev.mysql.com/doc/refman/8.0/en/problems-with-null.html">Problem with NULL</a>
+Sometime, we will be confused and meet problem when use <code class="language-plaintext highlighter-rouge">count</code>, <code class="language-plaintext highlighter-rouge">sum</code>, <code class="language-plaintext highlighter-rouge">min</code> with <code class="language-plaintext highlighter-rouge">NULL</code> value.
+Below query will output different values when select table having rows with <code class="language-plaintext highlighter-rouge">NULL</code> value</p>
+<pre><code class="language-mysql">create table `tb_user` (
+  user_id INT AUTO_INCREMENT,
+  age TINYINT Unsigned NULL,
+  PRIMARY KEY (user_id)
+);
+insert into tb_user(user_id, age) values (1, 30), (2, 20), (3, null), (4, 0);
+select count(*), count(age) from tb_user;
+count(*)	count(age)
+4	3
+</code></pre>
+<p>Another problems</p>
+<pre><code class="language-mysql">SELECT NULL, 1+NULL, CONCAT('Invisible',NULL);
+NULL	1+NULL	CONCAT('Invisible',NULL)
+(null)	(null)	(null)
+</code></pre>
+<p>Finaly, to avoid <code class="language-plaintext highlighter-rouge">NULL</code> value, should use <code class="language-plaintext highlighter-rouge">NOT NULL</code> and <code class="language-plaintext highlighter-rouge">DEFAULT</code> for field when designing table</p>
+
+<h4 id="avoid-too-many-columns">Avoid Too Many Columns</h4>
+<p>Wide tables can be extremely expensive and require more CPU time to process.
+Instead of creating one wide table, consider splitting it apart in to logical structures.
+<a href="https://medium.com/build-acl/supporting-wide-tables-in-mysql-18248e4e3b0a">Supporting Wide Table in Mysql</a></p>
+
+<h4 id="optimize-joins">Optimize Joins</h4>
+<p>Always include fewer tables in your join statements.
+An SQL statement with poorly designed pattern that involves a lot of joins may not work well.
+A rule of thumb is to have utmost a dozen joins for each query.</p>
+
+<h3 id="tip-5-mysql-query-caching">Tip #5: MySQL Query Caching</h3>
+<p>Should take advantage of MySQL query caching feature.
+This will speed up performance when read operations are conducted
+Can check if your MySQL server has query cache enabled by running the command below</p>
+<pre><code class="language-mysql">mysql&gt; show variables like 'have_query_cache';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| have_query_cache | YES   |
++------------------+-------+
+1 row in &lt;b&gt;set&lt;/b&gt; (0.00 sec)
+</code></pre>
+
+<h3 id="tip-6-avoid-order-by-rand">Tip #6: Avoid <code class="language-plaintext highlighter-rouge">order by rand()</code></h3>
+<p>https://www.sqlshack.com/what-to-choose-when-assigning-values-to-sql-server-variables-set-vs-select-t-sql-statements/
+https://www.warpconduit.net/2011/03/23/selecting-a-random-record-using-mysql-benchmark-results/
+https://jan.kneschke.de/projects/mysql/order-by-rand/
+http://mysql.rjweb.org/doc.php/random</p>
+
+<hr />
+<p>Referenced link :
+<a href="https://dzone.com/articles/how-to-optimize-mysql-queries-for-speed-and-perfor">How to Optimize MySQL Queries for Speed and Performance</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/problems-with-null.html">Problem with NULL</a>
+<a href="https://medium.com/build-acl/supporting-wide-tables-in-mysql-18248e4e3b0a">Supporting wide tables in MYSQL</a></p>]]></content><author><name>Anton</name><email>anhnt1208@gmail.com</email></author><category term="performance" /><category term="optimize" /><category term="database" /><category term="mysql" /><summary type="html"><![CDATA[Tip #1: Using Index Index All Columns Used in where, order by, and group by Clauses An index is also very useful when it comes to sorting records. Check the explain statement of query from the table with 500 rows without index mysql&gt; explain select customer_id, customer_name from customers where customer_id='140385'; +----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+ | id | select_type | table | partitions | type | possible_keys | key | key_len | ref | rows | filtered | Extra | +----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+ | 1 | SIMPLE | customers | NULL | ALL | NULL | NULL | NULL | NULL | 500 | 10.00 | Using where | +----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+ First, it is clear that MySQL will conduct a full table scan because key column is NULL. Second, MySQL server has clearly indicated that it’s going to conduct a full scan on the 500 rows in our database. To optimize the above query, we can just add an index to the customer_id field ```mysql mysql&gt; Create index customer_id ON customers (customer_Id); Query OK, 0 rows affected (0.02 sec) Records: 0 Duplicates: 0 Warnings: 0]]></summary></entry></feed>

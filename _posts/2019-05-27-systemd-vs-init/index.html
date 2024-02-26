@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Systemd vs /etc/init.d - My Notion Book</title>
+<meta name="description" content="The Notion Book for all things related to the technology.">
+
+
+  <meta name="author" content="Anton">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="My Notion Book">
+<meta property="og:title" content="Systemd vs /etc/init.d">
+<meta property="og:url" content="/_posts/2019-05-27-systemd-vs-init/">
+
+
+  <meta property="og:description" content="The Notion Book for all things related to the technology.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/_posts/2019-05-27-systemd-vs-init/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Anton Nguyen",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Notion Book Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--default">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/avatar/avatar.jpeg" alt="My Notion Book"></a>
+        
+        <a class="site-title" href="/">
+          My Notion Book
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <p>The init daemon is going to be replaced with daemon systemd on some of the Linux Distributions, while a lot of them have already implemented it. This is/will be creating a huge gap between traditional Unix/Linux Guard and New Linux Guard – programmers and System Admins.</p>
+
+<h2 id="what-is-init-">What is Init ?</h2>
+<p>The init is a daemon process which starts as soon as the computer starts and continue running till, it is shutdown. Init is the first process that starts when a computer boots, making it the parent of all other running processes directly or indirectly and hence typically it is assigned “pid=1“.</p>
+
+<p>If somehow init daemon could not start, no process will be started and the system will reach a stage called “Kernel Panic“. init is most commonly referred to as System V init. System V is the first commercial UNIX Operating System designed and usages of init on most of the Linux Distribution of today is identical with System V OS with a few exception like Slackware using BSD-style and Gentoo using custom init.</p>
+
+<p>init stores startup scripts at <code class="language-plaintext highlighter-rouge">/etc/init.d/</code></p>
+
+<p>The need to replace init with something more perfect was felt from a long time and several alternatives were developed from time-to-time, some of which became distribution’s native init replacement, some of which are:</p>
+<ul>
+  <li>
+<strong>Upstart</strong> : A init replacement daemon implemented in Ubuntu GNU/Linux and designed to start process asynchronously.</li>
+  <li>
+<strong>Epoch</strong> : A init replacement daemon built around simplicity and service management, designed to start process single-threaded.</li>
+  <li>
+<strong>Mudar</strong> : A init replacement daemon written in Python, implemented on Pardus GNU/Linux and designed to start process asynchronously.</li>
+  <li>
+<strong>systemd</strong> : A init replacement daemon designed to start process in parallel, implemented in a number of standard distribution – Fedora, OpenSuSE, Arch, RHEL, CentOS, etc.</li>
+</ul>
+
+<h2 id="what-is-systemd">What is systemd?</h2>
+<p>A systemd is a System Management Daemon named with UNIX convention to add ‘d‘ at the end of daemon. So, that they can be easily recognized.
+Initially it was released under GNU General Public License, but now the releases are made under GNU Lesser General Public License.
+Similar to init, systemd is the parent of all other processes directly or indirectly and is the first process that starts at boot hence typically assigned a “pid=1“.</p>
+
+<p>A systemd, may refer to all the packages, utilities and libraries around daemon.
+It was designed to overcome the shortcomings of init.
+It itself is a background processes which is designed to start processes in parallel, thus reducing the boot time and computational overhead.
+It has a lot other features as compared to init.</p>
+
+<p>Systemd keeps startup scripts at <code class="language-plaintext highlighter-rouge">/lib/systemd</code>, and symbolic links of them are contained at <code class="language-plaintext highlighter-rouge">/etc/systemd</code></p>
+
+<h2 id="why-there-was-a-need-to-replace-init">Why there was a need to replace init?</h2>
+<p>A init process starts serially i.e., one task starts only after the last task startup was successful and it was loaded in the memory. This often resulted into delayed and long booting time. However, systemd was not designed for speed but for getting the things done neatly which in turns avoid all the UN-necessary delay.</p>
+
+<p>systemd-analyze
+systemd-analyze blame
+journalctl -u apt-daily-upgrade -b</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Features</th>
+      <th>init</th>
+      <th>systemd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DBus Dependency – Mandatory</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Device based Activation</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Device dependency configuration with udev</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Timer based Activation</td>
+      <td>Cron/at</td>
+      <td>Proprietary</td>
+    </tr>
+    <tr>
+      <td>Quota Management</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Automatic Service Dependency Handling</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Kills users Process at logout</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Swap Management</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SELinux integration</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Support for Encrypted HDD</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Static kernle module loading</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GUI</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>List all the child processes</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Sysv compatible</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Interactive booting</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Portable to non x86</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Adopted on</td>
+      <td>Several Distro</td>
+      <td>Several Distro</td>
+    </tr>
+    <tr>
+      <td>Parallel service startup</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Resource limit per service</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Easy extensible startup script</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Separate Code and Configuration File</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Automatic dependency calculation</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Verbose debug</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td>N/A</td>
+      <td>V44+</td>
+    </tr>
+    <tr>
+      <td>Size</td>
+      <td>560 KB</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Number of Files</td>
+      <td>75 files</td>
+      <td>900 files + glib + DBus</td>
+    </tr>
+    <tr>
+      <td>Lines of code – LOC</td>
+      <td>15000 (Approx)</td>
+      <td>224000 (Approx) (inc Codes, comments and white space) 125000 (Approx) (acctual code)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="sysvinit-to-systemd-cheatsheet">SysVinit to Systemd Cheatsheet</h2>
+<p>|Sysvinit|Command|Systemd Command Notes|
+|——–|—-|——-|
+|service <service-name> start|systemctl start <service-name>|Used to start a service \(not reboot persistent)|
+|service <service-name> stop|systemctl stop <service-name>|Used to stop a service \(not reboot persistent)|
+|service <service-name> restart|systemctl restart <service-name>|Used to stop and then start a service|
+|service <service-name> reload|systemctl reload <service-name>|When supported, reloads the config file without interrupting pending operations.|
+|service <service-name> condrestart|systemctl condrestart <service-name>|Restarts if the service is already running.|
+|service <service-name> status|systemctl status <service-name>|Tells whether a service is currently running.|
+|ls /etc/rc.d/init.d/|systemctl \(or) systemctl list-unit-files --type=service \(or) ls /lib/systemd/system/\*.service /etc/systemd/system/\*.service|Used to list the services that can be started or stopped. Used to list all the services and other units|
+|chkconfig <service-name> on|systemctl enable <service-name>|Turn the service on, for start at next boot, or other trigger.|
+|chkconfig <service-name> off|systemctl disable <service-name>|Turn the service off for the next reboot, or any other trigger.|
+|chkconfig <service-name>|systemctl is-enabled <service-name>|Used to check whether a service is configured to start or not in the current environment.|
+|chkconfig --list|systemctl list-unit-files --type=service \(or) ls /etc/systemd/system/\*.wants/|Print a table of services that lists which runlevels each is configured on or off|
+|chkconfig --list \| grep 5:on|systemctl list-dependencies graphical.target|Print a table of services that will be started when booting into graphical mode|
+|chkconfig <service-name> --list|ls /etc/systemd/system/\*.wants/<service-name>.service|Used to list what levels this service is configured on or off|
+|chkconfig <service-name> --add|systemctl daemon-reload|Used when you create a new service file or modify any configuration|</service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></service-name></p>
+
+<h2 id="analyze-the-boot-process-with-the-blame-command">Analyze the boot process with the blame command</h2>
+<p>Run <code class="language-plaintext highlighter-rouge">systemd-analyze</code> without any extra commands will display the last boot statistics</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemd-analyze
+Startup finished <span class="k">in </span>4.038s <span class="o">(</span>kernel<span class="o">)</span> + 25.119s <span class="o">(</span>userspace<span class="o">)</span> <span class="o">=</span> 29.157s
+graphical.target reached after 23.117s <span class="k">in </span>userspace
+</code></pre></div></div>
+<p>Run <code class="language-plaintext highlighter-rouge">systemd-analyze blame</code> to get a verbose output</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemd-analyze blame
+  4.392s apt-daily-upgrade.service
+  2.777s cloud-init-local.service
+  2.533s apparmor.service
+  2.309s pollinate.service
+  2.187s dev-xvda1.device
+  1.374s cloud-init.service
+  1.248s cloud-config.service
+</code></pre></div></div>
+<p>To view full log service status</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>journalctl <span class="nt">-u</span> &lt;service-name&gt;
+</code></pre></div></div>
+<p>To dump our boot info into a plot data</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemd-analyze plot <span class="o">&gt;</span> /tmp/plot.svg
+eog /tmp/plot.svg
+</code></pre></div></div>
+
+<h3 id="references">References</h3>
+<p><a href="https://www.tecmint.com/systemd-replaces-init-in-linux">systemd replaces init in linux</a>
+<a href="http://0pointer.de/blog/projects/blame-game.html">blame systemd</a>
+<a href="https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet">SysVinit to Systemd Cheatsheet</a></p>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2024 Anton Nguyen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to Optimize MySQL Queries for Speed and Performance - My Notion Book</title>
+<meta name="description" content="The Notion Book for all things related to the technology.">
+
+
+  <meta name="author" content="Anton">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="My Notion Book">
+<meta property="og:title" content="How to Optimize MySQL Queries for Speed and Performance">
+<meta property="og:url" content="/_posts/2019-03-30-How-to-optimize-mysql-queries/">
+
+
+  <meta property="og:description" content="The Notion Book for all things related to the technology.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/_posts/2019-03-30-How-to-optimize-mysql-queries/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Anton Nguyen",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="My Notion Book Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--default">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/img/avatar/avatar.jpeg" alt="My Notion Book"></a>
+        
+        <a class="site-title" href="/">
+          My Notion Book
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h3 id="tip-1-using-index">Tip #1: Using Index</h3>
+<h4 id="index-all-columns-used-in-where-order-by-and-group-by-clauses">Index All Columns Used in <code class="language-plaintext highlighter-rouge">where</code>, <code class="language-plaintext highlighter-rouge">order by</code>, and <code class="language-plaintext highlighter-rouge">group by</code> Clauses</h4>
+<p>An index is also very useful when it comes to sorting records.
+Check the explain statement of query from the table with 500 rows without index</p>
+<pre><code class="language-mysql">mysql&gt; explain select customer_id, customer_name from customers where customer_id='140385';
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table     | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | customers | NULL       | ALL  | NULL          | NULL | NULL    | NULL |  500 |    10.00 | Using where |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+</code></pre>
+<p>First, it is clear that MySQL will conduct a full table scan because key column is <code class="language-plaintext highlighter-rouge">NULL</code>.
+Second, MySQL server has clearly indicated that it’s going to conduct a full scan on the 500 rows in our database.
+To optimize the above query, we can just add an index to the <code class="language-plaintext highlighter-rouge">customer_id</code> field</p>
+<pre><code class="language-mysql">mysql&gt; Create index customer_id ON customers (customer_Id);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; Explain select customer_id, customer_name from customers where customer_id='140385';
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+| id | select_type | table     | partitions | type | possible_keys | key         | key_len | ref   | rows | filtered | Extra |
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | customers | NULL       | ref  | customer_id   | customer_id | 13      | const |    1 |   100.00 | NULL  |
++----+-------------+-----------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+</code></pre>
+<p>You can clearly see that the number of rows to scan will be 1</p>
+<h4 id="use-index-prefixes">Use Index Prefixes</h4>
+<p>Indexing only a prefix of column values in this way can make the index file much smaller.
+When you index a BLOB or TEXT column, you must specify a prefix length for the index.</p>
+<pre><code class="language-mysql">CREATE TABLE test (blob_col BLOB, INDEX(blob_col(10)));
+</code></pre>
+<p>Read more at <a href="https://dev.mysql.com/doc/refman/8.0/en/column-indexes.html">Column-Indexes</a></p>
+
+<h4 id="multiple-column-indexes">Multiple-Column Indexes</h4>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/multiple-column-indexes.html">Multiple-Column Indexes</a></p>
+
+<h3 id="tip-2-optimize-like-statements-with-union-clause">Tip #2: Optimize Like Statements With Union Clause</h3>
+<p>When want to select with like statment in 2 fields
+Don’t use <code class="language-plaintext highlighter-rouge">like</code> statement with <code class="language-plaintext highlighter-rouge">or</code></p>
+<pre><code class="language-mysql">mysql&gt; select * from students where first_name like  'Ade%'  or last_name like 'Ade%' ;
+</code></pre>
+<p>Use <code class="language-plaintext highlighter-rouge">union</code> instead</p>
+<pre><code class="language-mysql">mysql&gt; select  from students where first_name like  'Ade%'
+union all select  from students where last_name like  'Ade%' ;
+</code></pre>
+<p>In fact, we should avoid Like Expressions With Leading Wildcards to search text in table,
+MySQL is not able to utilize indexes when there is a leading wildcard in a query.
+With example at tip #2, a search <code class="language-plaintext highlighter-rouge">like</code> this will cause MySQL to perform <em>full table scan</em> even
+if you have indexed the ‘first_name’ field on the students table</p>
+<pre><code class="language-mysql">mysql&gt; explain select * from students where first_name like  '%Ade'  ;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | students | NULL       | ALL  | NULL          | NULL | NULL    | NULL |  500 |    11.11 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+</code></pre>
+<p>Better way is using search engine ( elastic, redis, sphinx, … ).</p>
+
+<h3 id="tip-3-take-advantage-of-mysql-full-text-searches">Tip #3: Take Advantage of MySQL Full-Text Searches</h3>
+<p>Using MySQL full-text search (FTS) because it is far much faster than queries using wildcard characters
+To add a full-text search index to the students sample table, we can use the below MySQL command</p>
+<pre><code class="language-mysql">mysql&gt;Alter table students ADD FULLTEXT (first_name, last_name);
+mysql&gt; explain Select * from students where match(first_name, last_name) AGAINST ('Ade');
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+| id | select_type | table    | partitions | type     | possible_keys | key        | key_len | ref   | rows | filtered | Extra                         |
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+|  1 | SIMPLE      | students | NULL       | fulltext | first_name    | first_name | 0       | const |    1 |   100.00 | Using where; Ft_hints: sorted |
++----+-------------+----------+------------+----------+---------------+------------+---------+-------+------+----------+-------------------------------+
+</code></pre>
+
+<h3 id="tip-4-optimize-your-database-schema">Tip #4: Optimize Your Database Schema</h3>
+<h4 id="normalize-tables">Normalize Tables</h4>
+<p>Design table with following normal forms :</p>
+<ul>
+  <li>First Normal Form (1NF)</li>
+  <li>Second Normal Form (2NF)</li>
+  <li>Third Normal Form (3NF)</li>
+  <li>Boyce and Codd Normal Form (BCNF)</li>
+  <li>Fourth Normal Form (4NF)</li>
+</ul>
+
+<p>Always use the same data type for storing similar values even if they are on different tables
+Example : the data type of field <code class="language-plaintext highlighter-rouge">customer_id</code> should be same as INT type on both tables <code class="language-plaintext highlighter-rouge">customer</code> and <code class="language-plaintext highlighter-rouge">order</code></p>
+
+<h4 id="use-optimal-data-types">Use Optimal Data Types</h4>
+<p>Use right data type for each fields and shorter is always better
+For instances, if use design field to store item type that having value less than 255
+Using <code class="language-plaintext highlighter-rouge">TINYINT</code> is better than <code class="language-plaintext highlighter-rouge">INT</code>
+And use <code class="language-plaintext highlighter-rouge">DATETIME</code> for the fields expects a date value</p>
+
+<h4 id="avoid-null-values">Avoid <code class="language-plaintext highlighter-rouge">Null</code> Values</h4>
+<p>Should avoid this kind of values whenever possible because they can harm your database results.
+Take a look at <a href="https://dev.mysql.com/doc/refman/8.0/en/problems-with-null.html">Problem with NULL</a>
+Sometime, we will be confused and meet problem when use <code class="language-plaintext highlighter-rouge">count</code>, <code class="language-plaintext highlighter-rouge">sum</code>, <code class="language-plaintext highlighter-rouge">min</code> with <code class="language-plaintext highlighter-rouge">NULL</code> value.
+Below query will output different values when select table having rows with <code class="language-plaintext highlighter-rouge">NULL</code> value</p>
+<pre><code class="language-mysql">create table `tb_user` (
+  user_id INT AUTO_INCREMENT,
+  age TINYINT Unsigned NULL,
+  PRIMARY KEY (user_id)
+);
+insert into tb_user(user_id, age) values (1, 30), (2, 20), (3, null), (4, 0);
+select count(*), count(age) from tb_user;
+count(*)	count(age)
+4	3
+</code></pre>
+<p>Another problems</p>
+<pre><code class="language-mysql">SELECT NULL, 1+NULL, CONCAT('Invisible',NULL);
+NULL	1+NULL	CONCAT('Invisible',NULL)
+(null)	(null)	(null)
+</code></pre>
+<p>Finaly, to avoid <code class="language-plaintext highlighter-rouge">NULL</code> value, should use <code class="language-plaintext highlighter-rouge">NOT NULL</code> and <code class="language-plaintext highlighter-rouge">DEFAULT</code> for field when designing table</p>
+
+<h4 id="avoid-too-many-columns">Avoid Too Many Columns</h4>
+<p>Wide tables can be extremely expensive and require more CPU time to process.
+Instead of creating one wide table, consider splitting it apart in to logical structures.
+<a href="https://medium.com/build-acl/supporting-wide-tables-in-mysql-18248e4e3b0a">Supporting Wide Table in Mysql</a></p>
+
+<h4 id="optimize-joins">Optimize Joins</h4>
+<p>Always include fewer tables in your join statements.
+An SQL statement with poorly designed pattern that involves a lot of joins may not work well.
+A rule of thumb is to have utmost a dozen joins for each query.</p>
+
+<h3 id="tip-5-mysql-query-caching">Tip #5: MySQL Query Caching</h3>
+<p>Should take advantage of MySQL query caching feature.
+This will speed up performance when read operations are conducted
+Can check if your MySQL server has query cache enabled by running the command below</p>
+<pre><code class="language-mysql">mysql&gt; show variables like 'have_query_cache';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| have_query_cache | YES   |
++------------------+-------+
+1 row in &lt;b&gt;set&lt;/b&gt; (0.00 sec)
+</code></pre>
+
+<h3 id="tip-6-avoid-order-by-rand">Tip #6: Avoid <code class="language-plaintext highlighter-rouge">order by rand()</code>
+</h3>
+<p>https://www.sqlshack.com/what-to-choose-when-assigning-values-to-sql-server-variables-set-vs-select-t-sql-statements/
+https://www.warpconduit.net/2011/03/23/selecting-a-random-record-using-mysql-benchmark-results/
+https://jan.kneschke.de/projects/mysql/order-by-rand/
+http://mysql.rjweb.org/doc.php/random</p>
+
+<hr>
+<p>Referenced link :
+<a href="https://dzone.com/articles/how-to-optimize-mysql-queries-for-speed-and-perfor">How to Optimize MySQL Queries for Speed and Performance</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/problems-with-null.html">Problem with NULL</a>
+<a href="https://medium.com/build-acl/supporting-wide-tables-in-mysql-18248e4e3b0a">Supporting wide tables in MYSQL</a></p>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2024 Anton Nguyen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
