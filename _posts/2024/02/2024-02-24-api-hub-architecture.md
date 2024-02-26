@@ -8,10 +8,12 @@ tags: [Architecture, MicroService]
 
 ## Background 
 An API hub serves as a centralized repository, allowing several projects can register and integrate all APIs seamlessly, utilizing a single key.
+Internal API Hub: serve API for companies projects 
+External API Hub: Customers can register and use APIs for their projects, 
 
 ## Project goals
-- Reduce development timelines for new projects 
-- Can disable some APIs for special project
+- Reduce development cycles 
+- creating stickiness to applications and services
 
 ## Overview 
 
