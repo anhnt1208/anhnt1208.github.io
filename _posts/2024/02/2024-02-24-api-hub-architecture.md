@@ -13,7 +13,7 @@ External API Hub: Customers can register and use APIs for their projects,
 
 ## Project goals
 - Reduce development cycles 
-- creating stickiness to applications and services
+- Creating stickiness to applications and services
 
 ## Overview 
 
